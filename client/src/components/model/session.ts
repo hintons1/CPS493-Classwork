@@ -1,8 +1,7 @@
-import exp from "constants";
 import { reactive } from "vue";
 
 const session = reactive({
-    user: null as User | null,
+  user: null as User | null,
 })
 
 export interface User {
@@ -15,14 +14,14 @@ export interface User {
 }
 
 export function getSession(){
-    return session;
+  return session;
 }
 
 export function login(){
-    session.user = {
-        firstName: "Test",
-        lastName: "User",
-        email: "test@user.com",
-        role: "admin"
-    }
+  session.user = {
+    firstName: "Test",
+    lastName: "User",
+    email: "test@user.com",
+    role: "admin"
+  }
 }
