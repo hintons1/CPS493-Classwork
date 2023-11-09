@@ -11,12 +11,16 @@ const session = reactive({
   redirectUrl: null as string | null,
   messages: [] as {
     type: string,
-    text: string }[]
+    text: string
+  }[],
+  loading: 0
 })
 
 export function api(action: string){
-  toast.warning("this is a warning toast")
+  session.loading++;
   return myFetch.api(`$(action)`)
+    .catch(err=> showError(err))
+    .finally(()=> session.loading--)
 }
 
 export function getSession(){
@@ -25,7 +29,7 @@ export function getSession(){
 
 export function showError(err: any){
   toast.error( err.message ?? err);
-  session.messages.push({ type: "error", text: err.message ?? err})
+  session.messages.push({ type: "error", text: err.message ?? err});
 }
 
 export function useLogin(){
