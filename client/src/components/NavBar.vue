@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router';
+import LoginBadge from './LoginBadge.vue';
+import FlyoutPanel from './FlyoutPanel.vue';
+import ShoppingCart from './ShoppingCart.vue';
+import { count as cartCount } from "@/model/shoppingCart";
 
 const isActive = ref(false);
+const isShoppingCartOpen = ref(false);
 
 </script>
 
 <template>
-  <nav class="navbar" role="navigation" aria-label="main navigation">
+  <nav class="navbar" role="navigation" aria-label="main navigation" :class="{ isShoppingCartOpen }">
     <div class="navbar-brand">
       <a class="navbar-item" href="https://bulma.io">
         <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="28" height="28" />
@@ -25,7 +30,7 @@ const isActive = ref(false);
       <div class="navbar-start">
         <RouterLink class="navbar-item" to="/" >Home</RouterLink>
         <RouterLink class="navbar-item" to="/about">About</RouterLink>
-        <RouterLink class="navbar-item" to="/about">Products</RouterLink>
+        <RouterLink class="navbar-item" to="/products">Products</RouterLink>
         
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
@@ -52,16 +57,41 @@ const isActive = ref(false);
 
       <div class="navbar-end">
         <div class="navbar-item">
-          <loginBadge />
+          <a class="button" :class="{ 'is-active': isShoppingCartOpen }" @click.prevent="isShoppingCartOpen = !isShoppingCartOpen">
+            <span class="icon">
+              <i class="fas fa-shopping-cart"></i>
+            </span>
+            <i class="tag is-danger is-rounded is-small" v-if="cartCount">{{ cartCount }}</i>
+          </a>
+        </div>
+        <div class="navbar-item">
+          <LoginBadge />
         </div>
       </div>
     </div>
   </nav>
+  <FlyoutPanel  :class="{ 'is-active': isShoppingCartOpen }">
+    <ShoppingCart />
+  </FlyoutPanel>
 </template>
 
 
 <style scoped>
 
+@media (min-width: 641px) {
+  .navbar {
+    margin-right: 2rem;
+    transition: margin-right 0.5s ease-in-out;
+  }
+  .navbar.isShoppingCartOpen {
+    margin-right: 20rem;
+  }
+}
+.tag.is-small {
+  position: absolute;
+  transform: translate(50%, -30%);
+  font-size: x-small;
+}
 .router-link-active {
   font-weight: bold;
   border-bottom: 2px solid #00d1b2;
