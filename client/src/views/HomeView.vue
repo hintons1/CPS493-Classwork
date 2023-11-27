@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { getUsers, type User } from '@/model/users';
 import { ref } from 'vue';
 
   const newTask = ref('');
@@ -16,7 +17,6 @@ import { ref } from 'vue';
     (tabState.value == 'Current' && !task.completed) ||
     (tabState.value == 'Completed' && task.completed) ||
     tabState.value == 'All';
-
 
 </script>
 
@@ -56,6 +56,7 @@ import { ref } from 'vue';
           </button>
         </div>
       </div>
+
     </div>
   </main>
 </template>

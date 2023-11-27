@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import { getSession } from './model/session'
+import { getSession } from './model/session';
 import NavBar from './components/NavBar.vue';
 
 const session = getSession();
@@ -13,7 +13,7 @@ const session = getSession();
   </header>
 
   <div class="container">
-    <progress class="progress is-small is-primary" max="100"></progress>
+    <progress class="progress is-small is-primary is-striped" max="100" v-if="session.loading">15%</progress>
     <RouterView />
   </div>
 
